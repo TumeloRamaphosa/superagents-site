@@ -291,6 +291,18 @@ h2.sh em{font-style:italic;font-weight:300;}
 .step-t{font-weight:600;font-size:.9rem;color:var(--ink);margin-bottom:.3rem;}
 .step-d{font-size:.75rem;color:var(--i3);line-height:1.58;}
 
+/* INTEGRATIONS */
+.integrations-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin:2rem 0;}
+@media(max-width:900px){.integrations-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.integrations-grid{grid-template-columns:1fr;}}
+.int-card{background:var(--cream2);border:1px solid var(--bd);padding:1.8rem;text-align:center;transition:all .32s;}
+.int-card:hover{border-color:var(--gold);box-shadow:0 4px 20px rgba(184,130,0,.12);transform:translateY(-2px);}
+.int-icon{font-size:2rem;margin-bottom:.8rem;}
+.int-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;}
+.int-desc{font-size:.78rem;color:var(--i3);line-height:1.5;}
+.int-cta{text-align:center;margin-top:2rem;padding:1.5rem;background:var(--cream3);border:1px solid var(--bd);}
+.int-cta p{font-size:.85rem;color:var(--i3);margin:0;}
+
 /* NORTHSTAR PLACEHOLDER */
 .ns-hold{background:linear-gradient(135deg,var(--bgi) 0%,#221A10 100%);border:1px solid rgba(232,212,77,.12);padding:4rem;text-align:center;position:relative;overflow:hidden;}
 .ns-hold::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(184,130,0,.1),transparent 70%);pointer-events:none;}
@@ -368,6 +380,7 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
     <a href="#what">Intelligence</a>
     <a href="#gallery">Gallery</a>
     <a href="#how">Setup</a>
+    <a href="#integrations">Integrations</a>
     <a href="#pricing">Pricing</a>
   </div>
   <div style="display:flex;align-items:center;gap:.75rem;">
@@ -380,6 +393,7 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   <a href="#what" onclick="this.closest('.mob').classList.remove('open')">Intelligence</a>
   <a href="#gallery" onclick="this.closest('.mob').classList.remove('open')">Gallery</a>
   <a href="#how" onclick="this.closest('.mob').classList.remove('open')">Setup</a>
+  <a href="#integrations" onclick="this.closest('.mob').classList.remove('open')">Integrations</a>
   <a href="#pricing" onclick="this.closest('.mob').classList.remove('open')">Pricing</a>
   <button onclick="openModal();this.closest('.mob').classList.remove('open')" style="color:var(--gold);">Commission Yours &#8594;</button>
 </div>
@@ -697,6 +711,52 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
 
 <div class="divider"></div>
 
+<!-- INTEGRATIONS -->
+<section class="S sw" id="integrations">
+  <div class="wrap">
+    <span class="eye">Power Integrations</span>
+    <h2 class="sh">Connect to <em>1000+ Tools</em><br/>via Pipedream</h2>
+    <p class="sub">Your Super Agent doesn't just talk. It acts. Connect to your entire tech stack through Pipedream — no code required.</p>
+    <div class="integrations-grid">
+      <div class="int-card rv">
+        <div class="int-icon">&#128230;</div>
+        <div class="int-title">E-Commerce</div>
+        <div class="int-desc">Shopify, WooCommerce, Takealot — inventory, orders, customer data</div>
+      </div>
+      <div class="int-card rv2">
+        <div class="int-icon">&#128176;</div>
+        <div class="int-title">Payments</div>
+        <div class="int-desc">Stripe, PayFast, Yoco — invoices, receipts, payment confirmations</div>
+      </div>
+      <div class="int-card rv">
+        <div class="int-icon">&#128202;</div>
+        <div class="int-title">CRM & Sales</div>
+        <div class="int-desc">HubSpot, Salesforce, Pipedrive — leads, deals, follow-ups</div>
+      </div>
+      <div class="int-card rv2">
+        <div class="int-icon">&#128197;</div>
+        <div class="int-title">Calendars</div>
+        <div class="int-desc">Google Calendar, Calendly — bookings, reminders, scheduling</div>
+      </div>
+      <div class="int-card rv">
+        <div class="int-icon">&#128221;</div>
+        <div class="int-title">Documents</div>
+        <div class="int-desc">Google Drive, Dropbox, Notion — file access, knowledge bases</div>
+      </div>
+      <div class="int-card rv2">
+        <div class="int-icon">&#128640;</div>
+        <div class="int-title">Custom APIs</div>
+        <div class="int-desc">Any REST API — connect your own systems, databases, services</div>
+      </div>
+    </div>
+    <div class="int-cta rv">
+      <p>Enterprise plans include unlimited custom integrations. Business plans include 2 system integrations.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- NORTHSTAR PLACEHOLDER -->
 <section class="S si" id="northstar">
   <div class="wrap">
@@ -746,7 +806,8 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
           <li>Outbound voice calling</li>
           <li>Custom agent voice profile</li>
           <li>Obsidian brain (5M tokens)</li>
-          <li>2 custom system integrations</li>
+          <li>2 Pipedream integrations</li>
+          <li>Connect to 1000+ apps</li>
           <li>Knowledge base document upload</li>
           <li>Deep soul configuration session</li>
           <li>Priority support</li>
@@ -762,7 +823,8 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
           <li>Unlimited obsidian brain memory</li>
           <li>Multiple agents, one organisation</li>
           <li>White-label platform branding</li>
-          <li>Unlimited custom integrations</li>
+          <li>Unlimited Pipedream integrations</li>
+          <li>Custom API connections</li>
           <li>SLA guarantees + uptime commitment</li>
           <li>Dedicated account conductor</li>
           <li>Your agents on your infrastructure</li>
@@ -789,7 +851,8 @@ footer{padding:3rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   <div class="fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 132" width="42" height="42"><defs><radialGradient id="gf" cx="50%" cy="42%" r="56%"><stop offset="0%" stop-color="#FFE566"/><stop offset="42%" stop-color="#D49010"/><stop offset="100%" stop-color="#7A4800"/></radialGradient><radialGradient id="sf" cx="34%" cy="28%" r="48%"><stop offset="0%" stop-color="#FFFDF0" stop-opacity=".68"/><stop offset="100%" stop-color="#D49010" stop-opacity="0"/></radialGradient><clipPath id="cf"><circle cx="60" cy="53" r="37"/></clipPath></defs><circle cx="60" cy="53" r="44" fill="none" stroke="#E8D44D" stroke-width=".6" opacity=".25"/><circle cx="60" cy="53" r="37" fill="url(#gf)"/><g clip-path="url(#cf)" stroke="#1A0800" stroke-width=".65" fill="none" opacity=".18"><line x1="23" y1="53" x2="97" y2="53"/><line x1="60" y1="16" x2="60" y2="90"/><ellipse cx="60" cy="53" rx="23" ry="37"/><ellipse cx="60" cy="53" rx="37" ry="16"/><circle cx="38" cy="38" r="1.5" fill="#1A0800" stroke="none" opacity=".6"/><circle cx="82" cy="38" r="1.5" fill="#1A0800" stroke="none" opacity=".6"/></g><g clip-path="url(#cf)" transform="translate(60,49)" opacity=".87"><ellipse cx="0" cy="5" rx="12" ry="8" fill="#1A0800"/><circle cx="0" cy="-5" r="8.5" fill="#1A0800"/><path d="M-8.5,-9Q-17,-23-12,-26Q-7.5,-21-5.5,-11Z" fill="#1A0800"/><path d="M8.5,-9Q17,-23 12,-26Q7.5,-21 5.5,-11Z" fill="#1A0800"/><path d="M-7,7Q-14,9-14,17Q-14,23-5,23L5,23Q14,23 14,17Q14,9 7,7Z" fill="#1A0800"/></g><circle cx="60" cy="53" r="37" fill="url(#sf)"/><text x="60" y="103" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="12" fill="#E8D44D" letter-spacing="2.8">STUDEX</text><text x="60" y="116" text-anchor="middle" font-family="Courier Prime,monospace" font-weight="400" font-size="5" fill="rgba(184,130,0,.5)" letter-spacing="2.2">GLOBAL MARKETS</text></svg><div><div class="bw">Super Agents</div><div style="font-size:.64rem;color:var(--i4);margin-top:.15rem;">by Studex Group &#183; Johannesburg &#183; South Africa</div></div></div>
   <div class="fl-links">
     <a href="#what">Intelligence</a><a href="#gallery">Gallery</a>
-    <a href="#how">Process</a><a href="#pricing">Pricing</a>
+    <a href="#how">Process</a><a href="#integrations">Integrations</a>
+    <a href="#pricing">Pricing</a>
     <a href="mailto:t.ramaphosa@studex.dev">Contact</a>
   </div>
   <div class="fcopy">&#169; 2026 Studex Group. All rights reserved.</div>
