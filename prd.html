@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Write a PRD — Studex Super Agents</title>
+<meta name="description" content="Draft a product requirements document by typing or talking. Your answers stay in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Figtree:wght@300;400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F7F4EE;--cream2:#FFFFFF;--cream3:#F0EDE7;
+  --ink:#1A1612;--i2:#3D3730;--i3:#7A6F65;--i4:#B0A89E;
+  --bd:#E2DDD4;--bd2:#C8C0B4;
+  --gold:#B88200;--goldl:#E8D44D;--goldb:rgba(184,130,0,.09);
+  --rose:#C0284C;--ok:#1A7A52;--okb:rgba(26,122,82,.07);
+  --sh:0 1px 3px rgba(26,22,18,.06),0 4px 16px rgba(26,22,18,.08);
+  --shl:0 4px 8px rgba(26,22,18,.06),0 20px 56px rgba(26,22,18,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;scroll-behavior:smooth;}
+body{font-family:'Figtree',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;min-height:100vh;}
+::selection{background:rgba(232,212,77,.38);color:var(--ink);}
+a{color:inherit;text-decoration:none;}
+
+nav{
+  position:sticky;top:0;z-index:500;height:64px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  background:rgba(247,244,238,.95);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--bd);
+}
+.brand{display:flex;align-items:center;gap:.75rem;}
+.bw{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.32rem;color:var(--ink);line-height:1;letter-spacing:-.02em;}
+.bs{font-family:'Courier Prime',monospace;font-size:.4rem;letter-spacing:.22em;color:var(--i4);text-transform:uppercase;display:block;margin-top:2px;}
+.nav-l{display:flex;align-items:center;gap:1.7rem;}
+.nav-l a{font-size:.74rem;font-weight:500;color:var(--i3);letter-spacing:.03em;text-transform:uppercase;transition:color .2s;}
+.nav-l a:hover,.nav-l a.active{color:var(--ink);}
+.nav-cta{padding:.52rem 1.4rem;background:var(--ink);color:#fff;border:none;border-radius:2px;font-family:'Figtree',sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;transition:all .22s;}
+.nav-cta:hover{background:var(--gold);color:var(--ink);}
+.hbg{display:none;background:none;border:none;color:var(--ink);font-size:1.3rem;cursor:pointer;}
+@media(max-width:860px){.nav-l{display:none;}.hbg{display:block;}}
+.mob{display:none;position:fixed;inset:0;z-index:600;background:var(--cream2);flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;}
+.mob.open{display:flex;}
+.mob a{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--ink);}
+.mob-x{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--i3);font-size:1.5rem;cursor:pointer;}
+
+.page-head{padding:3.5rem 5% 2rem;max-width:1100px;margin:0 auto;}
+.eye{font-family:'Courier Prime',monospace;font-size:.62rem;letter-spacing:.2em;color:var(--rose);text-transform:uppercase;display:block;margin-bottom:.7rem;}
+h1.ph{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-bottom:.75rem;}
+h1.ph em{font-style:italic;font-weight:300;color:var(--gold);}
+.lead{color:var(--i3);font-size:.97rem;max-width:640px;line-height:1.72;font-weight:300;}
+
+.layout{max-width:1100px;margin:0 auto;padding:0 5% 4rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}}
+
+.panel{background:var(--cream2);border:1px solid var(--bd);border-radius:3px;box-shadow:var(--sh);padding:1.5rem;}
+.panel-h{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;margin-bottom:.35rem;}
+.panel-sub{font-size:.82rem;color:var(--i3);margin-bottom:1.2rem;line-height:1.55;}
+
+.voice-banner{font-size:.78rem;padding:.65rem .85rem;border-radius:2px;margin-bottom:1rem;line-height:1.5;}
+.voice-banner.ok{background:var(--okb);color:var(--ok);border:1px solid rgba(26,122,82,.15);}
+.voice-banner.warn{background:var(--goldb);color:var(--i2);border:1px solid rgba(184,130,0,.2);}
+
+.chat{min-height:220px;max-height:340px;overflow-y:auto;border:1px solid var(--bd);background:var(--cream);padding:1rem;margin-bottom:1rem;font-size:.86rem;}
+.msg{margin-bottom:.85rem;line-height:1.55;}
+.msg.agent{color:var(--i2);}
+.msg.user{color:var(--ink);padding-left:.65rem;border-left:2px solid var(--gold);}
+.msg strong{font-family:'Courier Prime',monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--i4);display:block;margin-bottom:.2rem;}
+
+.voice-acts{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;}
+.btn{padding:.72rem 1.25rem;border-radius:2px;font-family:'Figtree',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;border:none;transition:all .22s;}
+.btn-ink{background:var(--ink);color:#fff;}
+.btn-ink:hover{background:var(--gold);color:var(--ink);}
+.btn-out{background:var(--cream2);color:var(--i2);border:1px solid var(--bd2);}
+.btn-out:hover{border-color:var(--ink);color:var(--ink);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.mic-on{box-shadow:0 0 0 3px rgba(192,40,76,.25);background:var(--rose)!important;color:#fff!important;}
+.status{font-family:'Courier Prime',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--i4);margin-top:.75rem;}
+
+.fld{margin-bottom:1rem;}
+.fld label{display:block;font-family:'Courier Prime',monospace;font-size:.56rem;letter-spacing:.1em;color:var(--i4);text-transform:uppercase;margin-bottom:.42rem;}
+.fld input,.fld textarea{width:100%;padding:.72rem .95rem;background:var(--cream);border:1px solid var(--bd);border-radius:2px;color:var(--ink);font-family:'Figtree',sans-serif;font-size:.84rem;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.5;resize:vertical;}
+.fld textarea{min-height:4.5rem;}
+.fld input:focus,.fld textarea:focus{border-color:var(--gold);background:var(--cream2);}
+.fld.focused-by-agent textarea,.fld.focused-by-agent input{border-color:var(--gold);box-shadow:0 0 0 2px rgba(184,130,0,.12);}
+
+.form-acts{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.5rem;padding-top:1rem;border-top:1px solid var(--bd);}
+.saved-note{font-size:.72rem;color:var(--i4);margin-top:.65rem;}
+
+footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:var(--cream2);margin-top:2rem;}
+.fl-links{display:flex;gap:1.4rem;flex-wrap:wrap;}
+.fl-links a{font-size:.72rem;color:var(--i3);letter-spacing:.04em;text-transform:uppercase;}
+.fcopy{font-size:.68rem;color:var(--i4);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="brand">
+    <div>
+      <div class="bw">Super Agents</div>
+      <span class="bs">by Studex Group</span>
+    </div>
+  </a>
+  <div class="nav-l">
+    <a href="/">Home</a>
+    <a href="/write-a-prd" class="active">Write a PRD</a>
+    <a href="/#gallery">Gallery</a>
+    <a href="/#pricing">Pricing</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:.75rem;">
+    <a href="/#pricing" class="nav-cta" style="display:inline-block;line-height:1.4;">Commission</a>
+    <button type="button" class="hbg" aria-label="Menu" onclick="document.querySelector('.mob').classList.add('open')">&#9776;</button>
+  </div>
+</nav>
+<div class="mob" role="dialog" aria-label="Menu">
+  <button type="button" class="mob-x" onclick="this.closest('.mob').classList.remove('open')">&#10005;</button>
+  <a href="/" onclick="this.closest('.mob').classList.remove('open')">Home</a>
+  <a href="/write-a-prd">Write a PRD</a>
+  <a href="/#gallery" onclick="this.closest('.mob').classList.remove('open')">Gallery</a>
+</div>
+
+<header class="page-head">
+  <span class="eye">Product</span>
+  <h1 class="ph">Write a <em>PRD</em></h1>
+  <p class="lead">Fill in a product requirements document by typing, or talk through it with the on-page guide. Your draft stays in this browser only — nothing is sent to a server.</p>
+</header>
+
+<main class="layout">
+  <section class="panel" aria-labelledby="voice-title">
+    <h2 class="panel-h" id="voice-title">Conversation guide</h2>
+    <p class="panel-sub">The guide asks one question at a time and writes your answers into the form. You can interrupt, correct any field by hand, or keep typing instead.</p>
+    <div id="voice-banner" class="voice-banner warn" role="status"></div>
+    <div id="chat" class="chat" aria-live="polite" aria-relevant="additions"></div>
+    <div class="voice-acts">
+      <button type="button" class="btn btn-ink" id="btn-start">Start conversation</button>
+      <button type="button" class="btn btn-out" id="btn-mic" disabled>Hold to answer</button>
+      <button type="button" class="btn btn-out" id="btn-skip" disabled>Skip question</button>
+      <button type="button" class="btn btn-out" id="btn-stop" disabled>Pause</button>
+    </div>
+    <p class="status" id="status">Ready</p>
+  </section>
+
+  <section class="panel" aria-labelledby="form-title">
+    <h2 class="panel-h" id="form-title">Your PRD</h2>
+    <p class="panel-sub">Edit any field directly. Changes save automatically in this browser.</p>
+    <form id="prd-form" novalidate>
+      <div class="fld" data-field="productName">
+        <label for="productName">Product name</label>
+        <input type="text" id="productName" name="productName" autocomplete="off" placeholder="e.g. FleetPulse">
+      </div>
+      <div class="fld" data-field="audience">
+        <label for="audience">Who it's for</label>
+        <textarea id="audience" name="audience" rows="2" placeholder="Primary users and customers"></textarea>
+      </div>
+      <div class="fld" data-field="problem">
+        <label for="problem">Problem</label>
+        <textarea id="problem" name="problem" rows="3" placeholder="What pain are you solving?"></textarea>
+      </div>
+      <div class="fld" data-field="success">
+        <label for="success">What success looks like</label>
+        <textarea id="success" name="success" rows="3" placeholder="Outcomes, metrics, or milestones"></textarea>
+      </div>
+      <div class="fld" data-field="mustHave">
+        <label for="mustHave">Must-have features</label>
+        <textarea id="mustHave" name="mustHave" rows="4" placeholder="Non-negotiable capabilities"></textarea>
+      </div>
+      <div class="fld" data-field="outOfScope">
+        <label for="outOfScope">Out of scope</label>
+        <textarea id="outOfScope" name="outOfScope" rows="3" placeholder="Explicitly not building (for now)"></textarea>
+      </div>
+      <div class="fld" data-field="constraints">
+        <label for="constraints">Constraints</label>
+        <textarea id="constraints" name="constraints" rows="3" placeholder="Time, budget, tech, compliance"></textarea>
+      </div>
+      <div class="fld" data-field="openQuestions">
+        <label for="openQuestions">Open questions</label>
+        <textarea id="openQuestions" name="openQuestions" rows="3" placeholder="Decisions still to make"></textarea>
+      </div>
+    </form>
+    <div class="form-acts">
+      <button type="button" class="btn btn-ink" id="btn-download">Download markdown</button>
+      <button type="button" class="btn btn-out" id="btn-clear">Clear draft</button>
+    </div>
+    <p class="saved-note" id="saved-note">Draft not saved yet</p>
+  </section>
+</main>
+
+<footer>
+  <div class="fcopy">&copy; 2026 Studex Group</div>
+  <div class="fl-links">
+    <a href="/">Home</a>
+    <a href="/write-a-prd">Write a PRD</a>
+    <a href="mailto:t.ramaphosa@studex.dev">Contact</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'superagents_prd_draft_v1';
+
+  var STEPS = [
+    { key: 'productName', label: 'Product name', question: 'What is the product called? Say the name clearly.', speak: 'Hi — I will help you write a product requirements document. We will go one question at a time. You can type answers anytime. First: what is the product called?' },
+    { key: 'audience', label: 'Who it is for', question: 'Who is this product for? Describe the main users or customers.', speak: 'Who is this product for? Describe your primary users or customers.' },
+    { key: 'problem', label: 'Problem', question: 'What problem are you solving? What pain point matters most?', speak: 'What problem are you solving? Tell me the main pain point.' },
+    { key: 'success', label: 'Success', question: 'What does success look like? Mention outcomes or metrics if you have them.', speak: 'What does success look like? Share outcomes, metrics, or milestones.' },
+    { key: 'mustHave', label: 'Must-haves', question: 'What are the must-have features? List the essentials.', speak: 'What are the must-have features? List what is non-negotiable.' },
+    { key: 'outOfScope', label: 'Out of scope', question: 'What is explicitly out of scope for now?', speak: 'What is out of scope? What are you not building in this version?' },
+    { key: 'constraints', label: 'Constraints', question: 'Any constraints — time, budget, technology, or compliance?', speak: 'Any constraints I should know about? Time, budget, tech, or compliance.' },
+    { key: 'openQuestions', label: 'Open questions', question: 'What open questions or decisions are still unresolved?', speak: 'Last one: what open questions or decisions are still unresolved?' }
+  ];
+
+  var form = document.getElementById('prd-form');
+  var chat = document.getElementById('chat');
+  var statusEl = document.getElementById('status');
+  var bannerEl = document.getElementById('voice-banner');
+  var savedNote = document.getElementById('saved-note');
+
+  var stepIndex = 0;
+  var conversationActive = false;
+  var speaking = false;
+  var listening = false;
+  var recognition = null;
+
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var hasRecognition = !!SpeechRecognition;
+  var hasSynthesis = typeof window.speechSynthesis !== 'undefined';
+
+  function setBanner() {
+    if (hasRecognition && hasSynthesis) {
+      bannerEl.className = 'voice-banner ok';
+      bannerEl.textContent = 'Voice is available in this browser (built-in speech recognition and speech synthesis). Use Chrome or Edge for the best experience.';
+    } else {
+      bannerEl.className = 'voice-banner warn';
+      var parts = [];
+      if (!hasSynthesis) parts.push('speech synthesis');
+      if (!hasRecognition) parts.push('speech recognition');
+      bannerEl.textContent = 'This browser does not support ' + parts.join(' or ') + '. You can still complete the PRD by typing. Voice buttons stay disabled.';
+      document.getElementById('btn-start').disabled = true;
+    }
+  }
+
+  function getState() {
+    var data = {};
+    STEPS.forEach(function (s) {
+      var el = document.getElementById(s.key);
+      data[s.key] = el ? el.value.trim() : '';
+    });
+    return data;
+  }
+
+  function applyState(data) {
+    STEPS.forEach(function (s) {
+      var el = document.getElementById(s.key);
+      if (el && data[s.key] != null) el.value = data[s.key];
+    });
+  }
+
+  function saveDraft() {
+    var payload = { fields: getState(), stepIndex: stepIndex, updatedAt: Date.now() };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      savedNote.textContent = 'Draft saved in this browser · ' + new Date().toLocaleString();
+    } catch (e) {
+      savedNote.textContent = 'Could not save draft (storage full or blocked).';
+    }
+  }
+
+  function loadDraft() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var payload = JSON.parse(raw);
+      if (payload.fields) applyState(payload.fields);
+      if (typeof payload.stepIndex === 'number') stepIndex = Math.min(payload.stepIndex, STEPS.length);
+      savedNote.textContent = 'Restored draft from this browser';
+    } catch (e) { /* ignore */ }
+  }
+
+  function addChat(role, text) {
+    var div = document.createElement('div');
+    div.className = 'msg ' + role;
+    var label = role === 'agent' ? 'Guide' : 'You';
+    div.innerHTML = '<strong>' + label + '</strong>' + escapeHtml(text);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function highlightField(key) {
+    document.querySelectorAll('.fld').forEach(function (f) { f.classList.remove('focused-by-agent'); });
+    var wrap = document.querySelector('.fld[data-field="' + key + '"]');
+    if (wrap) wrap.classList.add('focused-by-agent');
+  }
+
+  function setStatus(text) {
+    statusEl.textContent = text;
+  }
+
+  function updateButtons() {
+    var voiceOk = hasRecognition && hasSynthesis;
+    document.getElementById('btn-stop').disabled = !conversationActive || !voiceOk;
+    document.getElementById('btn-skip').disabled = !conversationActive || !voiceOk;
+    document.getElementById('btn-mic').disabled = !conversationActive || !voiceOk || speaking;
+    document.getElementById('btn-start').textContent = conversationActive ? 'Resume guide' : 'Start conversation';
+  }
+
+  function speak(text, onEnd) {
+    if (!hasSynthesis) {
+      if (onEnd) onEnd();
+      return;
+    }
+    window.speechSynthesis.cancel();
+    var utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 1;
+    utter.pitch = 1;
+    speaking = true;
+    updateButtons();
+    setStatus('Speaking…');
+    utter.onend = function () {
+      speaking = false;
+      updateButtons();
+      if (onEnd) onEnd();
+    };
+    utter.onerror = function () {
+      speaking = false;
+      updateButtons();
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utter);
+  }
+
+  function setupRecognition() {
+    if (!hasRecognition || recognition) return;
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = document.documentElement.lang || 'en-US';
+
+    recognition.onstart = function () {
+      listening = true;
+      document.getElementById('btn-mic').classList.add('mic-on');
+      setStatus('Listening…');
+    };
+
+    recognition.onend = function () {
+      listening = false;
+      document.getElementById('btn-mic').classList.remove('mic-on');
+      if (conversationActive && !speaking) setStatus('Tap "Hold to answer" or type your answer');
+    };
+
+    recognition.onerror = function (ev) {
+      listening = false;
+      document.getElementById('btn-mic').classList.remove('mic-on');
+      if (ev.error === 'no-speech') {
+        setStatus('No speech heard — try again or type your answer');
+      } else if (ev.error !== 'aborted') {
+        setStatus('Voice error: ' + ev.error);
+      }
+      updateButtons();
+    };
+
+    recognition.onresult = function (ev) {
+      var transcript = '';
+      for (var i = ev.resultIndex; i < ev.results.length; i++) {
+        if (ev.results[i].isFinal) transcript += ev.results[i][0].transcript;
+      }
+      transcript = transcript.trim();
+      if (!transcript) return;
+      acceptAnswer(transcript);
+    };
+  }
+
+  function startListening() {
+    if (!conversationActive || !hasRecognition || speaking) return;
+    setupRecognition();
+    try {
+      recognition.start();
+    } catch (e) {
+      /* already started */
+    }
+  }
+
+  function stopListening() {
+    if (recognition && listening) {
+      try { recognition.stop(); } catch (e) { /* ignore */ }
+    }
+  }
+
+  function acceptAnswer(text) {
+    if (stepIndex >= STEPS.length) return;
+    var step = STEPS[stepIndex];
+    var el = document.getElementById(step.key);
+    if (el) {
+      el.value = text;
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    addChat('user', text);
+    saveDraft();
+    stepIndex++;
+    if (stepIndex < STEPS.length) {
+      askCurrentStep();
+    } else {
+      finishConversation();
+    }
+  }
+
+  function askCurrentStep() {
+    if (!conversationActive || stepIndex >= STEPS.length) return;
+    var step = STEPS[stepIndex];
+    highlightField(step.key);
+    addChat('agent', step.question);
+    var line = step.speak;
+    speak(line, function () {
+      setStatus('Answer by voice or type in the form');
+      updateButtons();
+    });
+  }
+
+  function finishConversation() {
+    highlightField('');
+    var msg = 'That covers all sections. Review the form, edit anything you like, then download your PRD as markdown.';
+    addChat('agent', msg);
+    speak(msg, function () {
+      setStatus('Complete — download when ready');
+      conversationActive = false;
+      updateButtons();
+    });
+    saveDraft();
+  }
+
+  function syncStepToFirstEmpty() {
+    for (var i = 0; i < STEPS.length; i++) {
+      var el = document.getElementById(STEPS[i].key);
+      if (!el || !el.value.trim()) {
+        stepIndex = i;
+        return;
+      }
+    }
+    stepIndex = STEPS.length;
+  }
+
+  function startConversation() {
+    if (!hasSynthesis) return;
+    conversationActive = true;
+    updateButtons();
+    if (stepIndex >= STEPS.length) syncStepToFirstEmpty();
+    if (stepIndex >= STEPS.length) {
+      finishConversation();
+      return;
+    }
+    askCurrentStep();
+  }
+
+  function pauseConversation() {
+    conversationActive = false;
+    stopListening();
+    window.speechSynthesis.cancel();
+    speaking = false;
+    setStatus('Paused — type freely or resume the guide');
+    updateButtons();
+  }
+
+  function skipQuestion() {
+    if (!conversationActive || stepIndex >= STEPS.length) return;
+    addChat('agent', '(Skipped — you can fill this in later.)');
+    stepIndex++;
+    saveDraft();
+    if (stepIndex < STEPS.length) askCurrentStep();
+    else finishConversation();
+  }
+
+  function buildMarkdown() {
+    var d = getState();
+    var title = d.productName || 'Product Requirements Document';
+    var lines = [
+      '# ' + title,
+      '',
+      '_Draft created with Studex Super Agents PRD writer._',
+      '',
+      '## Product name',
+      d.productName || '_TBD_',
+      '',
+      '## Who it\'s for',
+      d.audience || '_TBD_',
+      '',
+      '## Problem',
+      d.problem || '_TBD_',
+      '',
+      '## What success looks like',
+      d.success || '_TBD_',
+      '',
+      '## Must-have features',
+      d.mustHave || '_TBD_',
+      '',
+      '## Out of scope',
+      d.outOfScope || '_TBD_',
+      '',
+      '## Constraints',
+      d.constraints || '_TBD_',
+      '',
+      '## Open questions',
+      d.openQuestions || '_TBD_',
+      ''
+    ];
+    return lines.join('\n');
+  }
+
+  function downloadMarkdown() {
+    var md = buildMarkdown();
+    var name = (getState().productName || 'prd').replace(/[^\w\-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '') || 'prd';
+    var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name + '-prd.md';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      URL.revokeObjectURL(a.href);
+      a.remove();
+    }, 0);
+    saveDraft();
+  }
+
+  function clearDraft() {
+    if (!confirm('Clear all fields and reset the conversation?')) return;
+    STEPS.forEach(function (s) {
+      var el = document.getElementById(s.key);
+      if (el) el.value = '';
+    });
+    chat.innerHTML = '';
+    stepIndex = 0;
+    conversationActive = false;
+    localStorage.removeItem(STORAGE_KEY);
+    savedNote.textContent = 'Draft cleared';
+    setStatus('Ready');
+    updateButtons();
+  }
+
+  document.getElementById('btn-start').addEventListener('click', function () {
+    if (!conversationActive) startConversation();
+    else askCurrentStep();
+  });
+  document.getElementById('btn-stop').addEventListener('click', pauseConversation);
+  document.getElementById('btn-skip').addEventListener('click', skipQuestion);
+  document.getElementById('btn-download').addEventListener('click', downloadMarkdown);
+  document.getElementById('btn-clear').addEventListener('click', clearDraft);
+
+  var micBtn = document.getElementById('btn-mic');
+  micBtn.addEventListener('mousedown', startListening);
+  micBtn.addEventListener('mouseup', stopListening);
+  micBtn.addEventListener('mouseleave', stopListening);
+  micBtn.addEventListener('touchstart', function (e) { e.preventDefault(); startListening(); }, { passive: false });
+  micBtn.addEventListener('touchend', function (e) { e.preventDefault(); stopListening(); });
+
+  form.addEventListener('input', function () {
+    saveDraft();
+    if (conversationActive) setStatus('Typing is fine — the guide will continue when you are ready');
+  });
+
+  setBanner();
+  loadDraft();
+  updateButtons();
+  saveDraft();
+})();
+</script>
+</body>
+</html>
