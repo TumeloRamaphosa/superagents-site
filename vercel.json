@@ -2,7 +2,9 @@
   "version": 2,
   "builds": [
     { "src": "index.html", "use": "@vercel/static" },
-    { "src": "prd.html", "use": "@vercel/static" }
+    { "src": "prd.html", "use": "@vercel/static" },
+    { "src": "prd-model-hook.config.js", "use": "@vercel/static" },
+    { "src": "prd-model-hook.js", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/write-a-prd", "dest": "/prd.html" },

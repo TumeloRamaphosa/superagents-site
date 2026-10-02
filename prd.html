@@ -57,9 +57,11 @@ h1.ph em{font-style:italic;font-weight:300;color:var(--gold);}
 .panel-h{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:700;margin-bottom:.35rem;}
 .panel-sub{font-size:.82rem;color:var(--i3);margin-bottom:1.2rem;line-height:1.55;}
 
-.voice-banner{font-size:.78rem;padding:.65rem .85rem;border-radius:2px;margin-bottom:1rem;line-height:1.5;}
+.voice-banner,.model-banner{font-size:.78rem;padding:.65rem .85rem;border-radius:2px;margin-bottom:1rem;line-height:1.5;}
 .voice-banner.ok{background:var(--okb);color:var(--ok);border:1px solid rgba(26,122,82,.15);}
 .voice-banner.warn{background:var(--goldb);color:var(--i2);border:1px solid rgba(184,130,0,.2);}
+.model-banner.off{background:var(--cream3);color:var(--i2);border:1px solid var(--bd);}
+.model-banner.on{background:var(--okb);color:var(--ok);border:1px solid rgba(26,122,82,.15);}
 
 .chat{min-height:220px;max-height:340px;overflow-y:auto;border:1px solid var(--bd);background:var(--cream);padding:1rem;margin-bottom:1rem;font-size:.86rem;}
 .msg{margin-bottom:.85rem;line-height:1.55;}
@@ -130,6 +132,7 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   <section class="panel" aria-labelledby="voice-title">
     <h2 class="panel-h" id="voice-title">Conversation guide</h2>
     <p class="panel-sub">The guide asks one question at a time and writes your answers into the form. You can interrupt, correct any field by hand, or keep typing instead.</p>
+    <div id="model-banner" class="model-banner off" role="status"></div>
     <div id="voice-banner" class="voice-banner warn" role="status"></div>
     <div id="chat" class="chat" aria-live="polite" aria-relevant="additions"></div>
     <div class="voice-acts">
@@ -195,6 +198,8 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   </div>
 </footer>
 
+<script src="/prd-model-hook.config.js"></script>
+<script src="/prd-model-hook.js"></script>
 <script>
 (function () {
   var STORAGE_KEY = 'superagents_prd_draft_v1';
@@ -214,7 +219,9 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   var chat = document.getElementById('chat');
   var statusEl = document.getElementById('status');
   var bannerEl = document.getElementById('voice-banner');
+  var modelBannerEl = document.getElementById('model-banner');
   var savedNote = document.getElementById('saved-note');
+  var hook = window.PrdModelHook;
 
   var stepIndex = 0;
   var conversationActive = false;
@@ -225,6 +232,12 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   var hasRecognition = !!SpeechRecognition;
   var hasSynthesis = typeof window.speechSynthesis !== 'undefined';
+
+  function setModelBanner() {
+    if (!hook || !modelBannerEl) return;
+    modelBannerEl.textContent = hook.getStatusMessage();
+    modelBannerEl.className = 'model-banner ' + (hook.isActive() ? 'on' : 'off');
+  }
 
   function setBanner() {
     if (hasRecognition && hasSynthesis) {
@@ -280,7 +293,7 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
   function addChat(role, text) {
     var div = document.createElement('div');
     div.className = 'msg ' + role;
-    var label = role === 'agent' ? 'Guide' : 'You';
+    var label = role === 'agent' ? (hook && hook.agentChatLabel ? hook.agentChatLabel() : 'Guide') : 'You';
     div.innerHTML = '<strong>' + label + '</strong>' + escapeHtml(text);
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
@@ -416,11 +429,31 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
     if (!conversationActive || stepIndex >= STEPS.length) return;
     var step = STEPS[stepIndex];
     highlightField(step.key);
-    addChat('agent', step.question);
-    var line = step.speak;
-    speak(line, function () {
-      setStatus('Answer by voice or type in the form');
-      updateButtons();
+    var turnPromise = hook && hook.getAssistantTurn
+      ? hook.getAssistantTurn({
+          stepKey: step.key,
+          stepIndex: stepIndex,
+          scriptedQuestion: step.question,
+          scriptedSpeak: step.speak,
+          fields: getState()
+        })
+      : Promise.resolve(null);
+    turnPromise.then(function (modelTurn) {
+      var question = step.question;
+      var line = step.speak;
+      if (modelTurn && modelTurn.question) question = modelTurn.question;
+      if (modelTurn && modelTurn.speak) line = modelTurn.speak;
+      addChat('agent', question);
+      speak(line, function () {
+        setStatus('Answer by voice or type in the form');
+        updateButtons();
+      });
+    }).catch(function () {
+      addChat('agent', step.question);
+      speak(step.speak, function () {
+        setStatus('Answer by voice or type in the form');
+        updateButtons();
+      });
     });
   }
 
@@ -565,6 +598,7 @@ footer{padding:2rem 5%;border-top:1px solid var(--bd);display:flex;justify-conte
     if (conversationActive) setStatus('Typing is fine — the guide will continue when you are ready');
   });
 
+  setModelBanner();
   setBanner();
   loadDraft();
   updateButtons();
